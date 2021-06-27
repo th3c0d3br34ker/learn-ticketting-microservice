@@ -1,13 +1,13 @@
-import express, { json } from "express";
-import "express-async-errors";
-import mongoose from "mongoose";
+import express, { json } from 'express';
+import 'express-async-errors';
+import mongoose from 'mongoose';
 
-import { NotFoundError } from "./errors/not-found-error";
-import { errorHandler } from "./middlewares/error-handler";
-import { currentUserRouter } from "./routes/current-users";
-import { signInRouter } from "./routes/signin";
-import { signOutRouter } from "./routes/signout";
-import { signUpRouter } from "./routes/signup";
+import { NotFoundError } from './errors/not-found-error';
+import { errorHandler } from './middlewares/error-handler';
+import { currentUserRouter } from './routes/current-users';
+import { signInRouter } from './routes/signin';
+import { signOutRouter } from './routes/signout';
+import { signUpRouter } from './routes/signup';
 
 const app = express();
 const PORT = 3000;
@@ -21,20 +21,20 @@ app.use(currentUserRouter);
 
 app.use(errorHandler);
 
-app.all("*", () => {
+app.all('*', () => {
   throw new NotFoundError();
 });
 
 const start = async () => {
   try {
-    await mongoose.connect("mongodb://auth-mongo-srv:27017/auth", {
+    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth', {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
     });
-    console.log("Connected to MongoDB!");
+    console.log('Connected to MongoDB!');
   } catch (error) {
-    console.log("Error : ", error);
+    console.log('Error : ', error);
   }
 };
 
