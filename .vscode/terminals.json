@@ -1,0 +1,39 @@
+{
+  "autorun": true,
+  "autokill": true,
+  "terminals": [
+    {
+      "name": "skaffold",
+      "description": "For running skaffold",
+      "open": true,
+      "focus": false,
+      "execute": false,
+      "command": "skaffold.exe dev"
+    },
+    {
+      "name": "client",
+      "description": "For running client commands",
+      "open": true,
+      "focus": false,
+      "command": "cd client"
+    },
+    {
+      "name": "auth",
+      "description": "For running auth commands",
+      "open": true,
+      "focus": false,
+      "command": "cd auth"
+    },
+    {
+      "name": "docker",
+      "description": "For running auth commands",
+      "open": true,
+      "focus": false
+    },
+    {
+      "name": "primary",
+      "open": true,
+      "focus": true
+    }
+  ]
+}
