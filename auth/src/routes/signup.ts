@@ -44,7 +44,7 @@ router.post(
 
     req.session = { jwt: userJWT };
 
-    return res.send({
+    return res.status(201).send({
       success: true,
       message: `Created a user with email : ${email}`,
       data: { user },
