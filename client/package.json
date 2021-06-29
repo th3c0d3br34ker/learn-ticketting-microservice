@@ -13,7 +13,7 @@
   "author": "th3c0d3br34ker",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "next": "^11.0.1",
     "react": "^17.0.2",

@@ -25,6 +25,13 @@
       "command": "cd auth"
     },
     {
+      "name": "auth",
+      "description": "For running common commands",
+      "open": true,
+      "focus": false,
+      "command": "cd common"
+    },
+    {
       "name": "docker",
       "description": "For running auth commands",
       "open": true,

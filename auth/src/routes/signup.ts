@@ -21,34 +21,42 @@ router.post(
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    const existingUser = await User.findOne({ email });
+    try {
+      const existingUser = await User.findOne({ email });
 
-    if (existingUser) {
-      console.log(`Email : ${email} already in use!`);
+      if (existingUser) {
+        console.log(`Email : ${email} already in use!`);
 
-      throw new BadRequestError(`Email : ${email} already in use!`);
+        throw new BadRequestError(`Email : ${email} already in use!`);
+      }
+
+      console.log(`Creating a user with email : ${email}`);
+      const user = User.build({ email, password });
+      await user.save();
+
+      // Generate JWT and store it on the session.
+      const userJWT = sign(
+        {
+          id: user.id,
+          email: user.email,
+        },
+        process.env.JWT_KEY!
+      );
+
+      req.session = { jwt: userJWT };
+
+      return res.status(201).send({
+        success: true,
+        message: `Created a user with email : ${email}`,
+        data: { user },
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        success: false,
+        message: `Internal Server Error`,
+      });
     }
-
-    console.log(`Creating a user with email : ${email}`);
-    const user = User.build({ email, password });
-    await user.save();
-
-    // Generate JWT and store it on the session.
-    const userJWT = sign(
-      {
-        id: user.id,
-        email: user.email,
-      },
-      process.env.JWT_KEY!
-    );
-
-    req.session = { jwt: userJWT };
-
-    return res.status(201).send({
-      success: true,
-      message: `Created a user with email : ${email}`,
-      data: { user },
-    });
   }
 );
 
