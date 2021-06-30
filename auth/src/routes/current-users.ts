@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { currentUser } from '../middlewares/current-user';
+import { currentUser } from '@jvdtickets/common';
 
 const router = Router();
 

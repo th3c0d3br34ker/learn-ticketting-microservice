@@ -2,8 +2,7 @@ import express, { json } from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
-import { NotFoundError } from './errors/not-found-error';
-import { errorHandler } from './middlewares/error-handler';
+import { NotFoundError, errorHandler } from '@jvdtickets/common';
 import { currentUserRouter } from './routes/current-users';
 import { signInRouter } from './routes/signin';
 import { signOutRouter } from './routes/signout';
