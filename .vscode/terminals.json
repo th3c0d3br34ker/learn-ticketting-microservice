@@ -11,13 +11,6 @@
       "command": "skaffold.exe dev"
     },
     {
-      "name": "client",
-      "description": "For running client commands",
-      "open": true,
-      "focus": false,
-      "command": "cd client"
-    },
-    {
       "name": "auth",
       "description": "For running auth commands",
       "open": true,
@@ -25,7 +18,21 @@
       "command": "cd auth"
     },
     {
-      "name": "auth",
+      "name": "client",
+      "description": "For running client commands",
+      "open": true,
+      "focus": false,
+      "command": "cd client"
+    },
+    {
+      "name": "tickets",
+      "description": "For running tickets commands",
+      "open": true,
+      "focus": false,
+      "command": "cd tickets"
+    },
+    {
+      "name": "common",
       "description": "For running common commands",
       "open": true,
       "focus": false,
@@ -33,7 +40,7 @@
     },
     {
       "name": "docker",
-      "description": "For running auth commands",
+      "description": "For running docker commands",
       "open": true,
       "focus": false
     },
