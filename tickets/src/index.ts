@@ -24,7 +24,7 @@ const start = async () => {
 
 app.listen(PORT, () => {
   console.log(
-    `Auth Service v${process.env.npm_package_version} started on PORT: ${PORT}`
+    `Tickets Service v${process.env.npm_package_version} started on PORT: ${PORT}`
   );
 });
 
