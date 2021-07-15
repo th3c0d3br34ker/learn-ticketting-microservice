@@ -13,6 +13,8 @@ declare global {
   }
 }
 
+jest.mock('../nats-wrapper');
+
 let mongo: any;
 
 beforeAll(async () => {
@@ -20,6 +22,7 @@ beforeAll(async () => {
   const mongoUri = await mongo.getUri();
 
   process.env.JWT_KEY = 'secrect-key-jainam';
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
   await mongoose.connect(mongoUri, {
     useNewUrlParser: true,
