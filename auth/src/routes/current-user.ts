@@ -1,7 +1,7 @@
-import express from 'express';
+import { Router } from 'express';
 import { currentUser } from '@jvdtickets/common';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/api/users/currentuser', currentUser, (req, res) => {
   res.send({ currentUser: req.currentUser || null });
