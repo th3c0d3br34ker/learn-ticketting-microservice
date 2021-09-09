@@ -1,10 +1,12 @@
 import mongoose, { ObjectId } from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { Order, OrderStatus } from './orders';
 
 interface TicketAttrs {
   id: string;
   title: string;
   price: number;
+  version: number;
 }
 
 export interface TicketDoc extends mongoose.Document {
@@ -38,6 +40,9 @@ const ticketSchema = new mongoose.Schema(
     },
   }
 );
+
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 ticketSchema.statics.build = ({ id, title, price }: TicketAttrs) => {
   return new Ticket({
