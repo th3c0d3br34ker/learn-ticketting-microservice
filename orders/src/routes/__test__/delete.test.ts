@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
 import app from '../../app';
 import { Ticket } from '../../models/ticket';
@@ -6,6 +7,7 @@ import { Order, OrderStatus } from '../../models';
 it('marks an order as cancelled', async () => {
   // create a ticket with Ticket Model
   const ticket = Ticket.build({
+    id: mongoose.Types.ObjectId().toHexString(),
     title: 'concert',
     price: 20,
   });
@@ -29,7 +31,7 @@ it('marks an order as cancelled', async () => {
   // expectation to make sure the thing is cancelled
   const updatedOrder = await Order.findById(order.id);
 
-  expect(updatedOrder!.status).toEqual(OrderStatus.Cancelled);
+  expect(updatedOrder!.status).toEqual(OrderStatus.CANCELLED);
 });
 
 it.todo('emits a order cancelled event');

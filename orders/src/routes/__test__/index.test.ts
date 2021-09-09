@@ -1,9 +1,11 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 import app from '../../app';
 import { Ticket, Order } from '../../models';
 
 const buildTicket = async () => {
   const ticket = Ticket.build({
+    id: mongoose.Types.ObjectId().toHexString(),
     title: 'concert',
     price: 20,
   });

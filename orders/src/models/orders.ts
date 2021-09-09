@@ -1,5 +1,6 @@
 import { OrderStatus } from '@jvdtickets/common';
 import { Document, model, Model, Schema } from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { TicketDoc } from './ticket';
 
 interface OrderAttrs {
@@ -50,6 +51,9 @@ const orderSchema = new Schema(
     versionKey: false,
   }
 );
+
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
