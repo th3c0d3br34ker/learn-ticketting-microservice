@@ -7,7 +7,9 @@ import {
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Types } from 'mongoose';
+import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
 import { Order, OrderStatus, Ticket } from '../models';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -53,6 +55,12 @@ router.post(
     await order.save();
 
     // Publish order:created event.
+    new OrderCreatedPublisher(natsWrapper.client).publish({
+      id: order.id,
+      status: order.status,
+      userId: order.userId,
+      expiresAt: order.expiresAt.toISOString(),
+    });
 
     res.status(201).send(order);
   }
