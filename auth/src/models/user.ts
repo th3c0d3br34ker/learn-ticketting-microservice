@@ -54,5 +54,3 @@ userSchema.statics.build = (attrs: UserAttrs) => {
 const User = model<UserDoc, UserModel>('User', userSchema);
 
 export { User };
-
-8401615787;

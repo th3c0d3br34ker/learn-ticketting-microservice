@@ -3,7 +3,7 @@ import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
 import { NotFoundError, errorHandler } from '@jvdtickets/common';
-import { currentUserRouter } from './routes/current-users';
+import { currentUserRouter } from './routes/current-user';
 import { signInRouter } from './routes/signin';
 import { signOutRouter } from './routes/signout';
 import { signUpRouter } from './routes/signup';

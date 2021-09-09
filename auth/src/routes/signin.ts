@@ -1,21 +1,21 @@
 import { Request, Response, Router } from 'express';
 import { body } from 'express-validator';
-import { sign } from 'jsonwebtoken';
-import { BadRequestError, validateRequest } from '@jvdtickets/common';
+import jwt from 'jsonwebtoken';
+import { validateRequest, BadRequestError } from '@jvdtickets/common';
 
-import { User } from '../models/user';
 import { Password } from '../services/password';
+import { User } from '../models/user';
 
 const router = Router();
 
 router.post(
   '/api/users/signin',
   [
-    body('email').isEmail().withMessage('Email must be valid!'),
+    body('email').isEmail().withMessage('Email must be valid'),
     body('password')
       .trim()
       .notEmpty()
-      .withMessage('Password must be supplied!'),
+      .withMessage('You must supply a password'),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -23,21 +23,20 @@ router.post(
 
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
-      console.log(`Email : ${email} not found!`);
-      throw new BadRequestError('Invalid credentials!');
+      throw new BadRequestError('Invalid credentials');
     }
 
     const passwordsMatch = await Password.compare(
       existingUser.password,
       password
     );
-
     if (!passwordsMatch) {
       console.log(`Email : ${email} incorrect passowrd!`);
-      throw new BadRequestError('Invalid credentials!');
+      throw new BadRequestError('Invalid Credentials');
     }
 
-    const userJWT = sign(
+    // Generate JWT
+    const userJwt = jwt.sign(
       {
         id: existingUser.id,
         email: existingUser.email,
@@ -45,13 +44,12 @@ router.post(
       process.env.JWT_KEY!
     );
 
-    req.session = { jwt: userJWT };
+    // Store it on session object
+    req.session = {
+      jwt: userJwt,
+    };
 
-    return res.send({
-      success: true,
-      message: `Signin successful with email : ${email}`,
-      data: { existingUser },
-    });
+    res.status(200).send(existingUser);
   }
 );
 

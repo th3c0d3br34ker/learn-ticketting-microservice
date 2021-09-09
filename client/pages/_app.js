@@ -1,40 +1,35 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import buildClient from '../api/build-client';
-
 import Header from '../components/header';
 
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
       <Header currentUser={currentUser} />
-      <Component {...pageProps} />
+      <div className="container">
+        <Component currentUser={currentUser} {...pageProps} />
+      </div>
     </div>
   );
 };
 
 AppComponent.getInitialProps = async (appContext) => {
   const client = buildClient(appContext.ctx);
+  const { data } = await client.get('/api/users/currentuser');
+
   let pageProps = {};
-
-  try {
-    const { data } = await client.get('/api/users/current-user');
-
-    if (appContext.Component.getInitialProps) {
-      pageProps = await appContext.Component.getInitialProps(appContext.ctx);
-    }
-
-    return {
-      pageProps,
-      ...data,
-    };
-  } catch (error) {
-    console.log('Error in _app');
-    console.log(error.message);
-
-    return {
-      pageProps,
-    };
+  if (appContext.Component.getInitialProps) {
+    pageProps = await appContext.Component.getInitialProps(
+      appContext.ctx,
+      client,
+      data.currentUser
+    );
   }
+
+  return {
+    pageProps,
+    ...data,
+  };
 };
 
 export default AppComponent;
