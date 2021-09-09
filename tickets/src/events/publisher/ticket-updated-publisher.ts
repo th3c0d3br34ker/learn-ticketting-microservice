@@ -1,4 +1,4 @@
-import { Subjects, TicketUpdatedEvent } from '@jvdtickets/common';
+import { TicketUpdatedEvent, Subjects } from '@jvdtickets/common';
 import Publisher from '@jvdtickets/common/build/events/base-publisher';
 
 export class TicketUpdatedPublisher extends Publisher<TicketUpdatedEvent> {
