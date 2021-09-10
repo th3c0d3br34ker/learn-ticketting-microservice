@@ -19,14 +19,14 @@ app.use(
   })
 );
 
-app.use(errorHandler);
-
 app.use(currentUser);
 
 app.use(newOrderRouter);
 app.use(showOrderRouter);
 app.use(indexOrderRouter);
 app.use(deleteOrderRouter);
+
+app.use(errorHandler);
 
 app.all('*', () => {
   throw new NotFoundError();
