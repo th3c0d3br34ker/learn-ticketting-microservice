@@ -27,8 +27,8 @@ const paymentSchema = new Schema(
   },
   {
     toJSON: {
-      transform(doc, ret) {
-        ret.id = ret._id;
+      virtuals: true,
+      transform(_, ret) {
         delete ret._id;
       },
     },
